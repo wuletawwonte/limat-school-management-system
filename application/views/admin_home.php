@@ -42,18 +42,18 @@
 		                        </div>
 		                    </div><!-- ./col -->
 		                </a>
-		                <a href="<?php echo base_url(); ?>site/department.html">
+		                <a href="<?php echo base_url(); ?>welcome/managesubjects">
 		                    <div class="col-lg-3 col-xs-6">
 		                        <!-- small box -->
 		                        <div class="small-box bg-teal-active">
 		                            <div class="inner">
-		                                <h3>Faculty</h3>
-		                                <p>Manage departments</p>
+		                                <h3>Subject</h3>
+		                                <p>Manage subjects</p>
 		                            </div>
 		                            <div class="icon">
 		                                <i class="ion ion-bag"></i>
 		                            </div>
-		                            <div class="small-box-footer">Faculty info</div>
+		                            <div class="small-box-footer">Subject info</div>
 		                        </div>
 		                    </div><!-- ./col -->
 		                </a>

@@ -47,6 +47,11 @@ class Main_model extends CI_Model {
         return $this->db->count_all("students");
     }
 
+    public function subject_record_count() {
+
+        return $this->db->count_all("subjects");
+    }
+
 
 	public function getstudents() {
 
@@ -60,6 +65,26 @@ class Main_model extends CI_Model {
         $this->db->limit($limit, $start);
         // $this->db->join('department', 'student.student_department = department.department_id');
         $query = $this->db->get("students");
+
+        if ($query->num_rows() > 0) {
+
+            foreach ($query->result() as $row) {
+
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+
+        return false;
+
+    }
+
+    public function fetch_subject($limit, $start) {
+
+        $this->db->limit($limit, $start);
+        // $this->db->join('department', 'student.student_department = department.department_id');
+        $query = $this->db->get("subjects");
 
         if ($query->num_rows() > 0) {
 
@@ -97,6 +122,10 @@ class Main_model extends CI_Model {
     	$this->db->insert('students', $student);
     }
 
+    public function create_subject_record($subject) {
+    	$this->db->insert('subjects', $subject);
+    }
+
     public function update_student_record($student, $id, $user_id){
     	$user = array(
     		'username' => strtolower($student['first_name']).'.'.strtolower($student['last_name']), 
@@ -124,6 +153,21 @@ class Main_model extends CI_Model {
     	return false;
     }
 
+    public function fetch_subject_by_id($subject_id) {
+    	
+    	$this->db->where('id', $subject_id);
+    	$data = $this->db->get('subjects');
+
+    	if($data->num_rows() == 1) {
+    		foreach ($data->result() as $value) {
+    			# code...
+    			return $value;
+    		}
+    	}
+
+    	return false;
+    }
+
     public function delete_student($id) {
     	$this->db->where('id', $id);
     	$this->db->delete('students');
@@ -132,6 +176,15 @@ class Main_model extends CI_Model {
     public function delete_user($id) {
     	$this->db->where('id', $id);
     	$this->db->delete('users');
+    }
+
+    public function edit_subject_record($subject, $id) {
+    	$this->db->where('id', $id);
+    	$this->db->update('subjects', $subject);
+    }
+
+    public function delete_subject($id) {
+    	$this->db->where('id', $id)->delete('subjects');
     }
 
 

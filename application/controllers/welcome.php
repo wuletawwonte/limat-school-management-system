@@ -256,10 +256,94 @@ class Welcome extends CI_Controller {
 
 
 		} else {
-
+			redirect();
 		}
 
 	}
+
+
+// Subject Related Code Starts here	
+
+	public function managesubjects() {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+		
+
+	        $data = array();
+	        $data['heading'] = "Subject List";
+	        $data["base_url"] = base_url() . "welcome/managesubjects";
+	        $data["total_rows"] = $this->main_model->subject_record_count();
+	        $data["per_page"] = 3;
+	        $data["uri_segment"] = 3;
+
+	        $this->pagination->initialize($data);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+	        $data["result"] = $this->main_model->fetch_subject($data["per_page"], $page);
+	        $data["links"] = $this->pagination->create_links();
+
+	        $data['content'] = $this->load->view('admin_subjects',$data,true);
+	        $this->load->view('admin_master',$data);
+
+		} else {
+			redirect();
+		}
+	}
+
+
+	public function addsubjectform() {
+		
+		if($this->session->userdata('is_logged_in') == TRUE) {
+			$data = array();
+			$data['heading'] = "Create New Subject";
+			$data['content'] = $this->load->view('admin_add_subject', $data, true);
+			$this->load->view('admin_master', $data);
+		} else {
+			redirect();
+		}
+	} 
+
+	public function createsubjectrecord() {
+		$subject = array(
+			'title' => $this->input->post('title') 
+		);
+
+		$this->main_model->create_subject_record($subject);
+		redirect('welcome/managesubjects');
+	}
+
+	public function editsujectform($subject_id) {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+	        $data = array();
+	        $data['heading'] = "Edit Subject";
+	        $data['result'] = $this->main_model->fetch_subject_by_id($subject_id);
+	        $data['content'] = $this->load->view('admin_edit_subject',$data,true);
+	        $this->load->view('admin_master',$data);
+	    } else {
+	    	redirect();
+	    }
+	}
+
+	public function editsubjectrecord() {
+		$subject = array(
+			'title' => $this->input->post('title') 
+		);
+
+		$this->main_model->edit_subject_record($subject, $this->input->post('id'));
+		redirect('welcome/managesubjects');
+	}
+
+	public function deletesubject($id) {
+		$this->main_model->delete_subject($id);
+
+		redirect('welcome/managesubjects');
+	}
+
+
+
+
+
+
 
 
 

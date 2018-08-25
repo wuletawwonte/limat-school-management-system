@@ -33,10 +33,10 @@
                         <a href="<?php echo base_url(); ?>welcome/managestudents">Student</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url(); ?>site/course.html">Course</a>
+                        <a href="<?php echo base_url(); ?>welcome/manageteachers">Teacher</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url(); ?>site/department.html">Faculty</a>
+                        <a href="<?php echo base_url(); ?>welcome/managesubjects">Subject</a>
                     </li>
                     <li>
                         <a href="<?php echo base_url(); ?>site/mark.html">Marks</a>
@@ -77,7 +77,7 @@
                                     <a href="<?php echo base_url(); ?>site/settings.html">Settings</a>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <a href="<?php echo base_url(); ?>site">Grid</a>
+                                    <a href="<?php echo base_url(); ?>">Grid</a>
                                 </div>
                             </li>
                             <!-- Menu Footer-->

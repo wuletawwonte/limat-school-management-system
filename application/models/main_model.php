@@ -40,7 +40,7 @@ class Main_model extends CI_Model {
 		return $data->result_array();
 	}
 
-// Studnet Related quesries start here
+// Student Related quesries start here
 
     public function student_record_count() {
 
@@ -111,7 +111,7 @@ class Main_model extends CI_Model {
 		return $data->result_array();
 	}    
 
-	public function get_user_by_id($id) {
+	public function get_student_by_id($id) {
 		$this->db->where('id', $id);
 		$data = $this->db->get('students');
 
@@ -186,6 +186,88 @@ class Main_model extends CI_Model {
     public function delete_subject($id) {
     	$this->db->where('id', $id)->delete('subjects');
     }
+
+// Teacher Related Transaction Starts Here 
+
+
+    public function teacher_record_count() {
+
+        return $this->db->count_all("teachers");
+    }
+
+
+    public function fetch_teacher($limit, $start) {
+
+        $this->db->limit($limit, $start);
+        // $this->db->join('department', 'student.student_department = department.department_id');
+        $query = $this->db->get("teachers");
+
+        if ($query->num_rows() > 0) {
+
+            foreach ($query->result() as $row) {
+
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+
+        return false;
+
+    }
+
+    public function fetch_all_subjects() {
+    	$data = $this->db->get('subjects');
+    	return $data->result_array();
+    }
+
+    public function create_teacher_record($teacher) {
+    	$this->db->insert('teachers', $teacher);
+    }
+
+
+    public function fetch_teacher_by_id($teacher_id) {
+    	
+    	$this->db->where('id', $teacher_id);
+    	$data = $this->db->get('teachers');
+
+    	if($data->num_rows() == 1) {
+    		foreach ($data->result() as $value) {
+    			# code...
+    			return $value;
+    		}
+    	}
+
+    	return false;
+    }
+
+    public function update_teacher_record($teacher, $id, $user_id){
+    	$user = array(
+    		'username' => strtolower($teacher['first_name']).'.'.strtolower($teacher['last_name']), 
+    	);
+
+    	$this->db->where('id', $id);
+    	$this->db->update('teachers', $teacher);
+
+    	$this->db->where('id', $user_id);
+    	$this->db->update('users', $user);
+    }
+
+    public function delete_teacher($id) {
+    	$this->db->where('id', $id);
+    	$this->db->delete('teachers');
+    }
+
+	public function get_teacher_by_id($id) {
+		$this->db->where('id', $id);
+		$data = $this->db->get('teachers');
+
+		return $data->result_array();
+	}    
+
+
+
+
 
 
 

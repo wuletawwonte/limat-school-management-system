@@ -236,7 +236,7 @@ class Welcome extends CI_Controller {
 	}
 
 	public function deletestudent($student_id) {
-		$user = $this->main_model->get_user_by_id($student_id);
+		$user = $this->main_model->get_student_by_id($student_id);
 		$this->main_model->delete_student($student_id);
 		$this->main_model->delete_user($user[0]['user_id']);
 
@@ -340,155 +340,110 @@ class Welcome extends CI_Controller {
 	}
 
 
+// Teacher related code starts here
 
 
+	public function manageteachers() {
+
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+	        $data = array();
+	        $data['heading'] = "Teacher List";
+	        $data["base_url"] = base_url() . "welcome/manageteachers";
+	        $data["total_rows"] = $this->main_model->teacher_record_count();
+	        $data["per_page"] = 3;
+	        $data["uri_segment"] = 3;
+
+	        $this->pagination->initialize($data);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+	        $data["result"] = $this->main_model->fetch_teacher($data["per_page"], $page);
+	        $data["links"] = $this->pagination->create_links();
+
+	        $data['subjects'] = $this->main_model->fetch_all_subjects();
+	        $data['content'] = $this->load->view('admin_teachers',$data,true);
+	        $this->load->view('admin_master',$data);
 
 
+		} else {
+			redirect();
+		}
+	}
+
+	public function addteacherform() {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+			$data = array();
+			$data['heading'] = "Create Teacher Record";
+			$data['subjects'] = $this->main_model->fetch_all_subjects();
+			$data['content'] = $this->load->view('admin_add_teacher', $data, true);
+			$this->load->view('admin_master', $data);
+		} else {
+			redirect();
+		}
+	}
+
+	public function createteacherrecord() {
 
 
-
-
-// // Teacher Related functions start here 
-
-// 	public function manageteachers() {
-
-// 		if($this->session->userdata('is_logged_in') == TRUE) {
-
-// 	        $data = array();
-// 	        $data['heading'] = "Student List";
-// 	        $data["base_url"] = base_url() . "welcome/manageteachers";
-// 	        $data["total_rows"] = $this->main_model->student_record_count();
-// 	        $data["per_page"] = 3;
-// 	        $data["uri_segment"] = 3;
-
-// 	        $this->pagination->initialize($data);
-// 	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-// 	        $data["result"] = $this->main_model->fetch_student($data["per_page"], $page);
-// 	        $data["links"] = $this->pagination->create_links();
-
-// 	        $data['content'] = $this->load->view('admin_students',$data,true);
-// 	        $this->load->view('admin_master',$data);
-
-
-// 		} else {
-// 			redirect();
-// 		}
-// 	}
-
-// 	public function addstudentform() {
-		
-// 		if($this->session->userdata('is_logged_in') == TRUE) {
-// 			$data = array();
-// 			$data['heading'] = "Create Student Record";
-// 			$data['content'] = $this->load->view('admin_add_student', $data, true);
-// 			$this->load->view('admin_master', $data);
-// 		} else {
-// 			redirect();
-// 		}
-// 	} 
-
-// 	public function createstudentrecord() {
-// 		$user = array(
-// 			'username' => strtolower($this->input->post('first_name')).'.'.strtolower($this->input->post('last_name')), 
-//     		'password' => '123456',
-//     		'user_type' => 'student'
-// 		);
-// 		$this->main_model->create_user_record($user);
-// 		$user = $this->main_model->get_user_by_username($user['username']);
+		$user = array(
+			'username' => strtolower($this->input->post('first_name')).'.'.strtolower($this->input->post('last_name')), 
+    		'password' => '123456',
+    		'user_type' => 'teacher'
+		);
+		$this->main_model->create_user_record($user);
+		$user = $this->main_model->get_user_by_username($user['username']);
  
-// 		$student = array(
-// 			'first_name' => $this->input->post('first_name'), 
-// 			'last_name' => $this->input->post('last_name'),
-// 			'grade' => $this->input->post('grade'),
-// 			'section' => $this->input->post('section'),
-// 			'sex' => $this->input->post('sex'),
-// 			'kebele' => $this->input->post('kebele'),
-// 			'family_phone_number' => $this->input->post('family_phone_number'),
-// 			'user_id' => $user[0][id] 
-// 		);
+		$teacher = array(
+			'first_name' => $this->input->post('first_name'), 
+			'last_name' => $this->input->post('last_name'),
+			'kebele' => $this->input->post('kebele'),
+			'subject' => $this->input->post('subject'),
+			'user_id' => $user[0]['id'] 
+		);
 
-// 		$this->main_model->create_student_record($student);
-// 		redirect('welcome/managestudents');
-// 	}
+		$this->main_model->create_teacher_record($teacher);
+		redirect('welcome/manageteachers');
 
-// 	public function updatestudentrecord() {
+	}
 
-// 		$student = array(
-// 			'first_name' => $this->input->post('first_name'), 
-// 			'last_name' => $this->input->post('last_name'),
-// 			'grade' => $this->input->post('grade'),
-// 			'section' => $this->input->post('section'),
-// 			'sex' => $this->input->post('sex'),
-// 			'kebele' => $this->input->post('kebele'),
-// 			'family_phone_number' => $this->input->post('family_phone_number') 
-// 		);
+	public function updateteacherform($teacher_id) {
+		if($this->session->userdata('is_logged_in') == TRUE) {
 
-// 		$user = $this->main_model->get_user_by_id($this->input->post('id'));
-// 		$this->main_model->update_student_record($student, $this->input->post('id'), $user[0]['user_id']);
-// 		redirect('welcome/managestudents');
-// 	}
+	        $data = array();
+	        $data['heading'] = "Update Teacher Details";
+	        $data['result'] = $this->main_model->fetch_teacher_by_id($teacher_id);
+	        $data['subjects'] = $this->main_model->fetch_all_subjects();
+	        $data['content'] = $this->load->view('admin_update_teacher',$data,true);
+	        $this->load->view('admin_master',$data);
+	    } else {
+	    	redirect();
+	    }
+	}
 
-// 	public function updatestudentform($student_id) {
-// 		if($this->session->userdata('is_logged_in') == TRUE) {
+	public function updateteacherrecord() {
 
-// 	        $data = array();
-// 	        $data['heading'] = "Update Student Details";
-// 	        $data['result'] = $this->main_model->fetch_student_by_id($student_id);
-// 	        $data['content'] = $this->load->view('admin_update_student',$data,true);
-// 	        $this->load->view('admin_master',$data);
-// 	    } else {
-// 	    	redirect();
-// 	    }
-// 	}
+		$teacher = array(
+			'first_name' => $this->input->post('first_name'), 
+			'last_name' => $this->input->post('last_name'),
+			'sex' => $this->input->post('sex'),
+			'kebele' => $this->input->post('kebele'),
+			'subject' => $this->input->post('subject')
+		);
 
-// 	public function deletestudent($student_id) {
-// 		$user = $this->main_model->get_user_by_id($student_id);
-// 		$this->main_model->delete_student($student_id);
-// 		$this->main_model->delete_user($user[0]['user_id']);
-
-// 		redirect('welcome/managestudents');
-// 	}
-
-// 	public function viewstudentdetails($student_id) {
-// 		if($this->session->userdata('is_logged_in') == TRUE) {
+		$user = $this->main_model->get_user_by_id($this->input->post('id'));
+		$this->main_model->update_teacher_record($teacher, $this->input->post('id'), $user[0]['user_id']);
+		redirect('welcome/manageteachers');
+	}
 
 
-// 	        $data = array();
-// 	        $data['heading'] = "View Student Details";
-// 	        $data['result'] = $this->main_model->fetch_student_by_id($student_id);
-// 	        $data['content'] = $this->load->view('admin_view_student_details',$data,true);
-// 	        $this->load->view('admin_master',$data);
+	public function deleteteacher($teacher_id) {
+		$user = $this->main_model->get_teacher_by_id($teacher_id);
+		$this->main_model->delete_teacher($teacher_id);
+		$this->main_model->delete_user($user[0]['user_id']);
 
-
-
-// 		} else {
-
-// 		}
-
-// 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		redirect('welcome/manageteachers');
+	}
 
 
 

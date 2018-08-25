@@ -75,16 +75,63 @@ class Main_model extends CI_Model {
 
     }
 
-    public function create_student_record($student) {
+	public function create_user_record($user) {
+		$this->db->insert('users', $user);
+	}
 
+	public function get_user_by_username($username) {
+		$this->db->where('username', $username);
+		$data = $this->db->get('users');
+
+		return $data->result_array();
+	}    
+
+	public function get_user_by_id($id) {
+		$this->db->where('id', $id);
+		$data = $this->db->get('students');
+
+		return $data->result_array();
+	}    
+
+    public function create_student_record($student) {
+    	$this->db->insert('students', $student);
+    }
+
+    public function update_student_record($student, $id, $user_id){
     	$user = array(
     		'username' => strtolower($student['first_name']).'.'.strtolower($student['last_name']), 
-    		'password' => '123456',
-    		'user_type' => 'student'
     	);
 
-    	$this->db->insert('users', $user);
-    	$this->db->insert('students', $student);
+    	$this->db->where('id', $id);
+    	$this->db->update('students', $student);
+
+    	$this->db->where('id', $user_id);
+    	$this->db->update('users', $user);
+    }
+
+    public function fetch_student_by_id($student_id) {
+    	
+    	$this->db->where('id', $student_id);
+    	$data = $this->db->get('students');
+
+    	if($data->num_rows() == 1) {
+    		foreach ($data->result() as $value) {
+    			# code...
+    			return $value;
+    		}
+    	}
+
+    	return false;
+    }
+
+    public function delete_student($id) {
+    	$this->db->where('id', $id);
+    	$this->db->delete('students');
+    }
+
+    public function delete_user($id) {
+    	$this->db->where('id', $id);
+    	$this->db->delete('users');
     }
 
 

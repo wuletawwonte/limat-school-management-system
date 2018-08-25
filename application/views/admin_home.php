@@ -27,18 +27,18 @@
 		                        </div>
 		                    </div><!-- ./col -->
 		                </a>
-		                <a href="<?php echo base_url(); ?>site/course.html">
+		                <a href="<?php echo base_url(); ?>welcome/manageteachers">
 		                    <div class="col-lg-3 col-xs-6">
 		                        <!-- small box -->
 		                        <div class="small-box bg-teal-active">
 		                            <div class="inner">
-		                                <h3>Course</h3>
-		                                <p>Manage courses</p>
+		                                <h3>Teacher</h3>
+		                                <p>Manage teachers</p>
 		                            </div>
 		                            <div class="icon">
 		                                <i class="ion ion-bag"></i>
 		                            </div>
-		                            <div class="small-box-footer">Course info</div>
+		                            <div class="small-box-footer">Teacher info</div>
 		                        </div>
 		                    </div><!-- ./col -->
 		                </a>

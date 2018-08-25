@@ -23,15 +23,15 @@
 	                foreach($result as $list){ ?>
                     <tr>
                         <td>
-                            <a href="<?php echo base_url(); ?>student/view_student/">
-                                <?php echo $list->id; ?>
-                            </a></td>
-                        <td><?php echo $list->first_name.' '.$list->last_name; ?></td>
+                            <?php echo $list->id; ?>
+                        <td>
+                        	<a href="<?php echo base_url(); ?>welcome/viewstudentdetails/<?php echo $list->id; ?>"><?php echo $list->first_name.' '.$list->last_name; ?></a>
+                        </td>
                         <td><?php echo $list->grade; ?></td>
                         <td><?php echo $list->section; ?></td>
                         <td>
-                            <a href="<?php echo base_url(); ?>student/update_student/<?php echo $list->id; ?>">Update</a> |
-                            <a href="<?php echo base_url(); ?>student/delete_student/<?php echo $list->id; ?>">Delete</a>
+                            <a class="btn btn-xs btn-primary" href="<?php echo base_url(); ?>welcome/updatestudentform/<?php echo $list->id; ?>">Update</a> |
+                            <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>welcome/deletestudent/<?php echo $list->id; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>

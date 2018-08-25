@@ -4,7 +4,7 @@
 <footer class="main-footer">
     <div class="container">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 3.0.2
+            <b>Version</b> 1.0.0
         </div>
         <strong>Copyright &copy; <?php echo date("Y"); ?> </strong> limatschool.com
     </div><!-- /.container -->

@@ -445,6 +445,116 @@ class Welcome extends CI_Controller {
 		redirect('welcome/manageteachers');
 	}
 
+	public function viewteacherdetails($teacher_id) {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+	        $data = array();
+	        $data['heading'] = "View Teacher Details";
+	        $data['result'] = $this->main_model->fetch_teacher_by_id($teacher_id);
+	        $data['subjects'] = $this->main_model->fetch_all_subjects();
+	        $data['content'] = $this->load->view('admin_view_teacher_details',$data,true);
+	        $this->load->view('admin_master',$data);
+
+		} else {
+			redirect();
+		}
+	}
+
+// Section Related Code Starts here 
+
+	public function managesections() {
+
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+	        $data = array();
+	        $data['heading'] = "Section List";
+	        $data["base_url"] = base_url() . "welcome/managesections";
+	        $data["total_rows"] = $this->main_model->section_record_count();
+	        $data["per_page"] = 3;
+	        $data["uri_segment"] = 3;
+
+	        $this->pagination->initialize($data);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+	        $data["result"] = $this->main_model->fetch_section($data["per_page"], $page);
+	        $data["links"] = $this->pagination->create_links();
+
+	        $data['content'] = $this->load->view('admin_sections',$data,true);
+	        $this->load->view('admin_master',$data);
+
+
+		} else {
+			redirect();
+		}
+	}
+
+	public function addsectionform() {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+			$data = array();
+			$data['heading'] = "Create Section Record";
+			$data['content'] = $this->load->view('admin_add_section', $data, true);
+			$this->load->view('admin_master', $data);
+		} else {
+			redirect();
+		}
+	}
+
+
+	public function createsectionrecord() {
+		$data = array(
+			'title' => $this->input->post('grade').'th'.$this->input->post('name'),
+			'grade' => $this->input->post('grade'),
+			'name' => $this->input->post('name')
+		);
+		$this->main_model->create_section_record($data);
+		redirect('welcome/managesections');
+	}
+
+
+	public function updatesectionform($section_id) {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+	        $data = array();
+	        $data['heading'] = "Edit Section";
+	        $data['result'] = $this->main_model->fetch_section_by_id($section_id);
+	        $data['content'] = $this->load->view('admin_edit_section',$data,true);
+	        $this->load->view('admin_master',$data);
+	    } else {
+	    	redirect();
+	    }
+	}
+
+	public function updatesectionrecord() {
+		$section = array(
+			'title' => $this->input->post('grade').'th'.$this->input->post('name'),
+			'grade' => $this->input->post('grade'),
+			'name' => $this->input->post('name')
+		);
+
+		$this->main_model->update_section_record($section, $this->input->post('id'));
+		redirect('welcome/managesections');
+	}
+
+	
+	public function sectionteachersview($id) {
+		if($this->session->userdata('is_logged_in') == TRUE) {
+
+
+	        $data = array();
+	        $data['heading'] = "Section Teachers";
+	        $data["result"] = $this->main_model->fetch_all_subjects();
+	        $data['section'] = $this->main_model->fetch_section_by_id($id);
+	        $data['subject_teachers'] = $this->main_model->get_teacher_by_section($id);
+	        $data['teachers'] = $this->main_model->fetch_all_teachers();
+
+	        $data['content'] = $this->load->view('admin_section_teachers',$data,true);
+	        $this->load->view('admin_master',$data);
+	    } else {
+	    	redirect();
+	    }
+	}
+
 
 
 

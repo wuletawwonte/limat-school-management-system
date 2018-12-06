@@ -199,7 +199,6 @@ class Main_model extends CI_Model {
     public function fetch_teacher($limit, $start) {
 
         $this->db->limit($limit, $start);
-        // $this->db->join('department', 'student.student_department = department.department_id');
         $query = $this->db->get("teachers");
 
         if ($query->num_rows() > 0) {
@@ -266,159 +265,72 @@ class Main_model extends CI_Model {
 	}    
 
 
+// Section Related Transaction Starts Here ...
 
 
+    public function section_record_count() {
+
+        return $this->db->count_all("sections");
+    }
 
 
+    public function fetch_section($limit, $start) {
+
+        $this->db->limit($limit, $start);
+        $query = $this->db->get("sections");
+
+        if ($query->num_rows() > 0) {
+
+            foreach ($query->result() as $row) {
+
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+
+        return false;
+
+    }
+
+    public function create_section_record($section) {
+    	$this->db->insert('sections', $section);
+    }
 
 
-	// public function get_departments() {
-	// 	$data = $this->db->get('departments');
+    public function fetch_section_by_id($section_id) {
+    	
+    	$this->db->where('id', $section_id);
+    	$data = $this->db->get('sections');
 
-	// 	return $data->result_array();
-	// }
+    	if($data->num_rows() == 1) {
+    		foreach ($data->result() as $value) {
+    			# code...
+    			return $value;
+    		}
+    	}
 
-	// public function get_employees() {
-	// 	$data = $this->db->get('employees');
+    	return false;
+    }
 
-	// 	return $data->result_array();
-	// }
+    public function update_section_record($section, $id) {
+    	$this->db->where('id', $id);
+    	$this->db->update('sections', $section);
+    }
 
-	// public function get_nationality() {
-	// 	$data = $this->db->get('nationality');
+    public function get_teacher_by_section($section_id) {
+    	$this->db->where('section_id', $section_id);
+    	$data = $this->db->get('section_teachers');
 
-	// 	return $data->result_array();
-	// }
+    	return $data->result_array();
+    }
 
-	// public function get_constants() {
-	// 	$data = $this->db->get('constants');
+    public function fetch_all_teachers() {
+    	$data = $this->db->get('teachers');
 
-	// 	return $data->result_array();
-	// }
+    	return $data->result_array();
+    }
 
-	// public function editAdminAccount($passwd) {
-	// 	$data = array(
-	// 		'password' => $passwd
-	// 		);
-	// 	$this->db->where('username', 'admin');
-	// 	$this->db->update('users', $data);
-	// }
-
-	// public function check_position($pos) {		
-	// 	$this->db->where('user_type', $pos);
-	// 	$query = $this->db->get('users');
-
-	// 	if($query->num_rows() == 1){
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	// public function getDep($depId) {
-	// 	$this->db->where('department_id', $depId);
-	// 	$data = $this->db->get('departments');
-	// 	$data = $data->result_array();
-	// 	return $data[0]['name'];
-	// }
-
-
-	// public function check_department($dep) {		
-	// 	$this->db->where('name', $dep);
-	// 	$query = $this->db->get('departments');
-
-	// 	if($query->num_rows() == 1){
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	// public function create_user_account($username, $password, $user_type) {
-	// 	$data = array(
-	// 		'username' => $username,
-	// 		'password' => $password,
-	// 		'user_type' => $user_type 
-	// 		);
-	// 	$this->db->insert('users', $data);
-	// }
-
-	// public function create_department_account($name, $username, $password) {
-	// 	$this->create_user_account($username, $password, 'Department Head');
-	// 	$result = $this->db->get_where('users', array('username' => $username));
-	// 	$result = $result->result_array();
-	// 	$data = array(
-	// 		'name' => $name,
-	// 		'dep_head' => $result[0]['user_id'] 
-	// 		);
-	// 	$this->db->insert('departments', $data);
-	// }
-
-	// public function create_employee_account($id, $fname, $lname, $department, $gender, $banknumber, $houseAllowance, $basicsalary, $nationality) {
-	// 	$data = array(
-	// 		'employeeId' => $id,
-	// 		'fname' => $fname, 
-	// 		'lname' => $lname,
-	// 		'username' => strtolower($fname) . "." . strtolower($lname),
-	// 		'department' => $department, 
-	// 		'gender' => $gender,
-	// 		'account_number' => $banknumber,
-	// 		'house_allowance' => $houseAllowance,
-	// 		'basic_salary' => $basicsalary,
-	// 		'nationality' => $nationality
-	// 		);
-	// 	$this->db->insert('employees', $data);
-
-	// }
-
-	// public function get_employees_for_salary() {
-	// 	$data = array(
-	// 		'status' => 'active',
-	// 		'detail_status' => 'payroll accepted' 
-	// 		);
-	// 	$this->db->where($data);
-	// 	$res = $this->db->get('payrolls');
-	// 	$res = $res->result_array();
-	// 	foreach ($res as $row) {
-	// 		$this->db->where('payroll_id', $row['payroll_id']);
-	// 	}
-	// 	$result = $this->db->get('employees_payroll');
-
-	// 	return $result->result_array();
-	// }
-
-	// public function get_active_payroll() {
-	// 	$this->db->where('status', 'active');
-	// 	$this->db->where('department', $this->session->userdata('dep_id'));
-	// 	$res = $this->db->get('payrolls');
-	// 	$res = $res->result_array();
-	// 	return $res[0];
-	// }
-
-	// public function get_employees_payroll() {
-	// 	$this->db->where('department', $this->session->userdata('dep_id'));
-	// 	$this->db->where('payroll_id', $this->get_active_payroll()['payroll_id']);
-	// 	$result = $this->db->get('employees_payroll');
-	// 	return $result->result_array();
-	// }
-
-	// public function get_dep_id($username) {
-	// 	$this->db->where('username', $username);
-	// 	$res = $this->db->get('users');
-	// 	$res = $res->result_array();
-	// 	$this->db->where('dep_head', $res[0]['user_id']);
-	// 	$result = $this->db->get('departments');
-	// 	$result = $result->result_array();
-	// 	return $result[0]['department_id'];
-	// }
-
-	// public function get_user_id_for_department($username) {
-	// 	$this->db->where('username', $username);
-	// 	$res = $this->db->get('users');
-	// 	$res = $res->result_array();
-
-	// 	return $res[0]['user_id'];
-	// }
 
 
 }

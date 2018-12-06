@@ -24,7 +24,7 @@
                         <td>
                             <?php echo $list->id; ?>
                         <td>
-                        	<a href="<?php echo base_url(); ?>welcome/viewstudentdetails/<?php echo $list->id; ?>"><?php echo $list->first_name.' '.$list->last_name; ?></a>
+                        	<a href="<?php echo base_url(); ?>welcome/viewteacherdetails/<?php echo $list->id; ?>"><?php echo $list->first_name.' '.$list->last_name; ?></a>
                         </td>
                         <td>
                         	<?php foreach($subjects as $subject) {

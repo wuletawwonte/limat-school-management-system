@@ -21,20 +21,18 @@
                             <td><?php echo $result->sex; ?></td>
                         </tr>
                         <tr>
-                            <td>Grade</td>
-                            <td><?php echo $result->grade; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Section</td>
-                            <td><?php echo $result->section; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Family Phone Number</td>
-                            <td><?php echo $result->family_phone_number; ?></td>
-                        </tr>
-                        <tr>
                             <td>Kebele</td>
                             <td><?php echo $result->kebele; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Subject</td>
+                            <td>                        	
+                            	<?php foreach($subjects as $subject) {
+	                        		if($subject['id'] == $result->subject) {
+	                        			echo $subject['title'];
+	                        		}
+                        		} ?>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

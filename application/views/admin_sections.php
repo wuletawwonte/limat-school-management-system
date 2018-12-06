@@ -5,14 +5,14 @@
 <section class="content">
     <div class="box box-default">
         <div class="box-header with-border">
-            <a href="<?php echo base_url(); ?>welcome/addsubjectform" class="btn btn-primary pull-left">Add New</a>
+            <a href="<?php echo base_url(); ?>welcome/addsectionform" class="btn btn-primary pull-left">Add New</a>
         </div>
         <div class="box-body">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Subject id</th>
-                        <th>Subject Name</th>
+                        <th>Section Id</th>
+                        <th>Title</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -23,8 +23,9 @@
                         <td><?php echo $list->id; ?></td>
                         <td><?php echo $list->title; ?></td>
                         <td>
-                            <a class="btn btn-xs btn-primary" href="<?php echo base_url(); ?>welcome/editsujectform/<?php echo $list->id; ?>">Edit</a> |
-                            <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>welcome/deletesubject/<?php echo $list->id; ?>">Delete</a>
+                            <a class="btn btn-xs btn-primary" href="<?php echo base_url(); ?>welcome/updatesectionform/<?php echo $list->id; ?>">Update</a> |  
+                            <a class="btn btn-xs btn-info" href="<?php echo base_url(); ?>welcome/sectionteachersview/<?php echo $list->id; ?>">Teachers</a> |
+                            <a class="btn btn-xs btn-danger" href="<?php echo base_url(); ?>welcome/deleteteacher/<?php echo $list->id; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>

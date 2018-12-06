@@ -7,15 +7,19 @@
             <h3 class="box-title">Fill the form carefully</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
-            <form action="<?php echo base_url(); ?>welcome/editsubjectrecord" method="post" role="form">
+            <form action="<?php echo base_url(); ?>welcome/updatesectionrecord" method="post" role="form">
                 <div class="col-xs-6"><br>
                 	<input type="text" name="id" value=<?php echo $result->id; ?> hidden>
                     <div class="form-group">
-                        <label>Subject Title</label>
-                        <input type="text" name="title"  class="form-control" value=<?php echo $result->title;?> required />
+                        <label>Grade</label>
+                        <input type="number" name="grade"  class="form-control" value=<?php echo $result->grade;?> required />
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary pull-right">Edit</button>
+                        <label>Section</label>
+                        <input type="text" maxlength=1 name="name"  class="form-control" value=<?php echo $result->name;?> required />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary pull-right">Update</button>
                     </div>
             </form>
         </div>

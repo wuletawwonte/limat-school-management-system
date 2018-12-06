@@ -39,7 +39,7 @@
                         <a href="<?php echo base_url(); ?>welcome/managesubjects">Subject</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url(); ?>site/mark.html">Marks</a>
+                        <a href="<?php echo base_url(); ?>welcome/managesections">Sections</a>
                     </li>
 					<li>
                         <a href="<?php echo base_url(); ?>site/settings.html">Settings</a>

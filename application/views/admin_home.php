@@ -57,6 +57,21 @@
 		                        </div>
 		                    </div><!-- ./col -->
 		                </a>
+		                <a href="<?php echo base_url(); ?>welcome/managesections">
+		                    <div class="col-lg-3 col-xs-6">
+		                        <!-- small box -->
+		                        <div class="small-box bg-teal-active">
+		                            <div class="inner">
+		                                <h3>Sections</h3>
+		                                <p>Manage sections</p>
+		                            </div>
+		                            <div class="icon">
+		                                <i class="ion ion-bag"></i>
+		                            </div>
+		                            <div class="small-box-footer">Section info</div>
+		                        </div>
+		                    </div><!-- ./col -->
+		                </a>
 		                <a href="<?php echo base_url(); ?>site/settings.html">
 		                    <div class="col-lg-3 col-xs-6">
 		                        <!-- small box -->

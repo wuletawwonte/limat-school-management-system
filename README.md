@@ -1,3 +1,7 @@
+# Limat School Management System By Wuletaw Wonte
+Im Web developer and work as freelancer and this project is Students final project and is about the school of limat and 
+automates mark related tasks and developed with codeigniter. 
+
 # CodeIgniter 2
 Open Source PHP Framework (originally from EllisLab)
 
